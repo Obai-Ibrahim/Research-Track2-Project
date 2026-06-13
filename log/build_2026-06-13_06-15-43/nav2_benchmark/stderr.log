@@ -1,0 +1,1 @@
+[0mCMake Error: The current CMakeCache.txt directory /home/obai/.local/share/Trash/files/research_ws.2/build/nav2_benchmark/CMakeCache.txt is different than the directory /home/obai/research_ws/build/nav2_benchmark where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt[0m
