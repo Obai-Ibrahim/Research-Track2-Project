@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="office_world">
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://office</uri>
+    </include>
+
+    <!-- Dynamic obstacles — moved by move_corridor_cylinders.py via /set_entity_state.
+         Person-scale: r=0.25 m, h=1.7 m. Centre z = 0.85 (bottom on ground).
+         NOTE: if re-enabled, set Z = 0.85 in move_corridor_cylinders.py to match.
+    <model name='cyl_1'>
+      <pose>-5 -4.5 0.85 0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Red</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='cyl_2'>
+      <pose>0 -4.5 0.85 0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Blue</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='cyl_3'>
+      <pose>-6 -1 0.85 0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Green</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name='cyl_4'>
+      <pose>3.5 -5.5 0.85 0 0 0</pose>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry><cylinder><radius>0.25</radius><length>1.7</length></cylinder></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Yellow</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    -->
+
+    <!-- Exposes /set_entity_state so a ROS node can teleport models at runtime. -->
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+      <ros>
+        <namespace>/</namespace>
+      </ros>
+      <update_rate>60.0</update_rate>
+    </plugin>
+  </world>
+</sdf>

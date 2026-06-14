@@ -1,0 +1,1 @@
+/home/obai/research_ws/build/nav2_benchmark/ament_cmake_environment_hooks/local_setup.bash

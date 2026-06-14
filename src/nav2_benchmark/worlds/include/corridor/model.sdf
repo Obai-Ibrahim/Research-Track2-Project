@@ -1,0 +1,259 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='corridor'>
+    <pose frame=''>0 0 0 0 0 0</pose>
+
+    <!-- ===== L-SHAPED PERIMETER =====
+         Horizontal leg: x in [-10, 3],  y in [-2, 2]      (13 m x 4 m)
+         Vertical   leg: x in [ -1, 3],  y in [ 2, 7.5]    ( 4 m x 5.5 m)
+         Inner corner at (-1, 2). Walls trace the perimeter clockwise.
+    -->
+
+    <!-- Wall_0 — south wall of horizontal leg: y=-2, x in [-10, 3], length 13 -->
+    <link name='Wall_0'>
+      <collision name='Wall_0_Collision'>
+        <geometry>
+          <box><size>13 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_0_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>13 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-3.5 -2 0 0 -0 0</pose>
+    </link>
+
+    <!-- Wall_1 — east wall (full L height): x=+3, y in [-2, 7.5], length 9.5 -->
+    <link name='Wall_1'>
+      <collision name='Wall_1_Collision'>
+        <geometry>
+          <box><size>9.5 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_1_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>9.5 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>3 2.75 0 0 0 1.5708</pose>
+    </link>
+
+    <!-- Wall_2 — top of vertical leg: y=+7.5, x in [-1, 3], length 4 -->
+    <link name='Wall_2'>
+      <collision name='Wall_2_Collision'>
+        <geometry>
+          <box><size>4 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_2_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>4 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>1 7.5 0 0 -0 0</pose>
+    </link>
+
+    <!-- Wall_3 — inside west wall of vertical leg: x=-1, y in [2, 7.5], length 5.5 -->
+    <link name='Wall_3'>
+      <collision name='Wall_3_Collision'>
+        <geometry>
+          <box><size>5.5 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_3_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>5.5 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-1 4.75 0 0 0 1.5708</pose>
+    </link>
+
+    <!-- Wall_4 — north wall of horizontal leg (west of vertical leg): y=+2, x in [-10, -1], length 9 -->
+    <link name='Wall_4'>
+      <collision name='Wall_4_Collision'>
+        <geometry>
+          <box><size>9 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_4_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>9 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-5.5 2 0 0 -0 0</pose>
+    </link>
+
+    <!-- Wall_5 — west wall of horizontal leg: x=-10, y in [-2, 2], length 4 -->
+    <link name='Wall_5'>
+      <collision name='Wall_5_Collision'>
+        <geometry>
+          <box><size>4 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_5_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>4 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-10 0 0 0 0 1.5708</pose>
+    </link>
+
+    <!-- ===== DESKS (4 x small wall-mounted, 0.8 x 0.5 x 0.75 m) =====
+         Each desk sits ~25 mm off its wall face. Long axis runs along the wall.
+         Free corridor width past each desk: 4 - 0.5 = 3.5 m.
+    -->
+
+    <!-- Desk_1 — against south wall in horizontal leg, x=-7 -->
+    <link name='Desk_1'>
+      <collision name='Desk_1_Collision'>
+        <geometry>
+          <box><size>0.8 0.5 0.75</size></box>
+        </geometry>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+      </collision>
+      <visual name='Desk_1_Visual'>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box><size>0.8 0.5 0.75</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-7 -1.65 0 0 0 0</pose>
+    </link>
+
+    <!-- Desk_2 — against north wall in horizontal leg, x=-3.5 -->
+    <link name='Desk_2'>
+      <collision name='Desk_2_Collision'>
+        <geometry>
+          <box><size>0.8 0.5 0.75</size></box>
+        </geometry>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+      </collision>
+      <visual name='Desk_2_Visual'>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box><size>0.8 0.5 0.75</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-3.5 1.65 0 0 0 0</pose>
+    </link>
+
+    <!-- Desk_3 — against south wall near the corner, x=1 -->
+    <link name='Desk_3'>
+      <collision name='Desk_3_Collision'>
+        <geometry>
+          <box><size>0.8 0.5 0.75</size></box>
+        </geometry>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+      </collision>
+      <visual name='Desk_3_Visual'>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box><size>0.8 0.5 0.75</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>1 -1.65 0 0 0 0</pose>
+    </link>
+
+    <!-- Desk_4 — against east wall in vertical leg, y=5 (rotated 90°) -->
+    <link name='Desk_4'>
+      <collision name='Desk_4_Collision'>
+        <geometry>
+          <box><size>0.5 0.8 0.75</size></box>
+        </geometry>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+      </collision>
+      <visual name='Desk_4_Visual'>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box><size>0.5 0.8 0.75</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>2.65 5 0 0 0 0</pose>
+    </link>
+
+    <static>1</static>
+  </model>
+</sdf>

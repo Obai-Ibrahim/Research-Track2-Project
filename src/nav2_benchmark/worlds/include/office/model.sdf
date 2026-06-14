@@ -1,0 +1,473 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='office'>
+    <pose frame=''>0 0 0 0 0 0</pose>
+
+    <!-- ===== OUTER BOUNDARY (10 m x 8 m, x: -5..+5, y: -4..+4) ===== -->
+
+    <!-- Top wall: y = +4 -->
+    <link name='Wall_0'>
+      <collision name='Wall_0_Collision'>
+        <geometry>
+          <box><size>10 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_0_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>10 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>0 4 0 0 -0 0</pose>
+    </link>
+
+    <!-- Right wall: x = +5 -->
+    <link name='Wall_1'>
+      <collision name='Wall_1_Collision'>
+        <geometry>
+          <box><size>8 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_1_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>8 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>5 0 0 0 0 -1.5708</pose>
+    </link>
+
+    <!-- Bottom wall: y = -4 -->
+    <link name='Wall_2'>
+      <collision name='Wall_2_Collision'>
+        <geometry>
+          <box><size>10 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_2_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>10 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>0 -4 0 0 -0 3.14159</pose>
+    </link>
+
+    <!-- Left wall: x = -5 -->
+    <link name='Wall_3'>
+      <collision name='Wall_3_Collision'>
+        <geometry>
+          <box><size>8 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_3_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>8 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-5 0 0 0 -0 1.5708</pose>
+    </link>
+
+    <!-- ===== ROOM DIVIDER AT y = +1 ===== =====
+         Splits top half (rooms) from bottom half (hallway).
+         Three 0.9 m door gaps centred at x = -3.5, 0, +3.5.
+    -->
+
+    <!-- Segment 1: x in [-5, -3.95], length 1.05 -->
+    <link name='Wall_4'>
+      <collision name='Wall_4_Collision'>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_4_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-4.475 1 0 0 -0 0</pose>
+    </link>
+
+    <!-- Segment 2: x in [-3.05, -0.45], length 2.6 -->
+    <link name='Wall_5'>
+      <collision name='Wall_5_Collision'>
+        <geometry>
+          <box><size>2.6 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_5_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>2.6 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-1.75 1 0 0 -0 0</pose>
+    </link>
+
+    <!-- Segment 3: x in [0.45, 3.05], length 2.6 -->
+    <link name='Wall_6'>
+      <collision name='Wall_6_Collision'>
+        <geometry>
+          <box><size>2.6 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_6_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>2.6 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>1.75 1 0 0 -0 0</pose>
+    </link>
+
+    <!-- Segment 4: x in [3.95, 5], length 1.05 -->
+    <link name='Wall_7'>
+      <collision name='Wall_7_Collision'>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_7_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>4.475 1 0 0 -0 0</pose>
+    </link>
+
+    <!-- ===== ROOM PARTITIONS (vertical at x = -2 and x = +2, y: 1..4) ===== -->
+
+    <!-- Wall between Room A (bedroom) and Room B (living room): x = -2 -->
+    <link name='Wall_8'>
+      <collision name='Wall_8_Collision'>
+        <geometry>
+          <box><size>3 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_8_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>3 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-2 2.5 0 0 0 1.5708</pose>
+    </link>
+
+    <!-- Wall between Room B (living room) and Room C (office): x = +2 -->
+    <link name='Wall_9'>
+      <collision name='Wall_9_Collision'>
+        <geometry>
+          <box><size>3 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_9_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>3 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>2 2.5 0 0 0 1.5708</pose>
+    </link>
+
+    <!-- ===== STUDY (bottom-right, x: 2..5, y: -4..-2) =====
+         Door 0.9 m wide centred at x = +3.5, facing the hallway.
+    -->
+
+    <!-- Study left wall: x = 2, y: -4..-2 -->
+    <link name='Wall_10'>
+      <collision name='Wall_10_Collision'>
+        <geometry>
+          <box><size>2 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_10_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>2 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>2 -3 0 0 0 1.5708</pose>
+    </link>
+
+    <!-- Study top wall left segment: y=-2, x in [2, 3.05], length 1.05 -->
+    <link name='Wall_11'>
+      <collision name='Wall_11_Collision'>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_11_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>2.525 -2 0 0 -0 0</pose>
+    </link>
+
+    <!-- Study top wall right segment: y=-2, x in [3.95, 5], length 1.05 -->
+    <link name='Wall_12'>
+      <collision name='Wall_12_Collision'>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+      </collision>
+      <visual name='Wall_12_Visual'>
+        <pose frame=''>0 0 1.25 0 -0 0</pose>
+        <geometry>
+          <box><size>1.05 0.15 2.5</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>4.475 -2 0 0 -0 0</pose>
+    </link>
+
+    <!-- ===== TABLE 1 — Bedroom (Room A), centre x=-3.5, y=2.5 =====
+         Small round wood table, 0.5 m radius, 0.78 m tall column.
+    -->
+    <link name='Table_1'>
+      <collision name='Table_1_Column_Collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.78</length>
+          </cylinder>
+        </geometry>
+        <pose frame=''>0 0 0.39 0 0 0</pose>
+      </collision>
+      <visual name='Table_1_Column_Visual'>
+        <pose frame=''>0 0 0.39 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.05</radius>
+            <length>0.78</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>0.6 0.6 0.6 1</ambient>
+        </material>
+      </visual>
+      <collision name='Table_1_Top_Collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.5</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <pose frame=''>0 0 0.805 0 0 0</pose>
+      </collision>
+      <visual name='Table_1_Top_Visual'>
+        <pose frame=''>0 0 0.805 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.5</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-3.5 2.5 0 0 0 0</pose>
+    </link>
+
+    <!-- ===== TABLE 2 — Hallway coffee table at x=-2, y=-2.5 =====
+         Lower round table, 0.7 m radius, 0.5 m tall column.
+    -->
+    <link name='Table_2'>
+      <collision name='Table_2_Column_Collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.5</length>
+          </cylinder>
+        </geometry>
+        <pose frame=''>0 0 0.25 0 0 0</pose>
+      </collision>
+      <visual name='Table_2_Column_Visual'>
+        <pose frame=''>0 0 0.25 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.08</radius>
+            <length>0.5</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+          <ambient>0.6 0.6 0.6 1</ambient>
+        </material>
+      </visual>
+      <collision name='Table_2_Top_Collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.7</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <pose frame=''>0 0 0.525 0 0 0</pose>
+      </collision>
+      <visual name='Table_2_Top_Visual'>
+        <pose frame=''>0 0 0.525 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.7</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>-2 -2.5 0 0 0 0</pose>
+    </link>
+
+    <!-- ===== DESK — Office (Room C), centre x=3.5, y=3.5 =====
+         Simple box desk, 1.6 m x 0.7 m x 0.75 m.
+    -->
+    <link name='Desk_1'>
+      <collision name='Desk_1_Collision'>
+        <geometry>
+          <box><size>1.6 0.7 0.75</size></box>
+        </geometry>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+      </collision>
+      <visual name='Desk_1_Visual'>
+        <pose frame=''>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box><size>1.6 0.7 0.75</size></box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+        </material>
+      </visual>
+      <pose frame=''>3.5 3.5 0 0 0 0</pose>
+    </link>
+
+    <static>1</static>
+  </model>
+</sdf>
