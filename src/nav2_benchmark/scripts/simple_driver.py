@@ -4,25 +4,22 @@
 Smoke test of the start/stop sync. Assumes Nav2 is already up (e.g. via
 benchmark.launch.py). For each trial:
   1) /obstacles/stop          (park cylinders at t=0)
-  2) teleport robot to start  (/gazebo/set_entity_state, falling back
-                               to /set_entity_state; entity name 'waffle',
-                               falling back to 'turtlebot3_waffle')
-  3) sleep 2 s
-  4) BasicNavigator.setInitialPose(start)
-  5) BasicNavigator.clearAllCostmaps()
-  6) sleep 7 s          (robot held still before any motion command)
-  7) /obstacles/start  +  BasicNavigator.goToPose(goal)
-  8) wait until nav.isTaskComplete()
-  9) print "Trial X done: result=<...>"
- 10) /obstacles/stop
+  2) teleport robot to start
+  3) BasicNavigator.setInitialPose(start)   <-- IMMEDIATELY after teleport
+  4) BasicNavigator.clearAllCostmaps()      <-- wipe any transient garbage
+  5) sleep 7 s          (robot held still before any motion command)
+  6) /obstacles/start  +  BasicNavigator.goToPose(goal)
+  7) wait until nav.isTaskComplete()
+  8) print "Trial X done: result=<...>"
+  9) /obstacles/stop
  (+) sleep 7 s before the next trial (skipped after the last)
 
-NOTE on map↔odom: teleporting via set_entity_state does NOT reset
-Gazebo's diff_drive plugin. The odom frame keeps tracking from the
-robot's original spawn pose, so after teleport the map→odom transform
-absorbs an offset. The TF chain remains internally consistent and Nav2
-plans/drives correctly, but RViz will show the odom frame visually
-shifted from the map frame — that's cosmetic, not a bug.
+ORDER MATTERS: do not sleep between teleport and setInitialPose. While
+Gazebo's body is at the new pose but AMCL's TF still says the old pose,
+incoming /scan rays get projected into the global costmap via the WRONG
+map->base_link transform. That polluted costmap is what you see as a
+"crash". Calling setInitialPose immediately narrows that window to a
+few ms, and the subsequent clearAllCostmaps wipes whatever sneaked in.
 
 Edit TRIALS below to match your map. Run with
     --ros-args -p use_sim_time:=true
@@ -42,8 +39,11 @@ from nav2_simple_commander.robot_navigator import BasicNavigator, TaskResult
 
 # (start_pose, goal_pose) — each pose = (x, y, yaw_radians)
 TRIALS = [
-    ((0.0, 0.0, 0.0),  (2.0, 1.5, 0.0)),
-    ((2.0, 1.5, 1.57), (-1.0, -1.0, 0.0)),
+    ((1.0, 5.0, 0.0), (0.0, 0.0, 0.0)),
+    ((-2.0, -1.0, 1.57),  (2.0, 1.5, 0.0)),
+    ((0.0, 0.0, 0.0), (-4.0, -1.0, 0.0)),
+    ((0.0, 0.0, 0.0), (-4.0, -1.0, 0.0)),
+    ((1.0, 5.0, 0.0), (0.0, 0.0, 0.0))
 ]
 
 ENTITY_NAMES = ['waffle', 'turtlebot3_waffle']
@@ -136,38 +136,43 @@ def main():
         # 2. teleport robot to start
         driver.teleport(*start)
 
-        # 3. settle
-        time.sleep(2.0)
-
-        # 4. tell AMCL where we are
+        # 3. tell AMCL where we are IMMEDIATELY (no sleep before this)
         init_stamp = nav.get_clock().now().to_msg()
         nav.setInitialPose(make_pose_stamped(*start, stamp=init_stamp))
 
-        # 5. clear costmaps (drop any stale obstacle marks)
+        # 4. clear costmaps to wipe any obstacle marks written during the
+        #    brief TF-mismatch window between teleport and setInitialPose.
+        #    Two passes with a small gap: the first clears whatever is in
+        #    the costmap; the gap lets in-flight scans (under the now-correct
+        #    TF) land; the second pass catches any obstacle layer pollution
+        #    that arrived between AMCL accepting /initialpose and the first
+        #    clear taking effect.
+        nav.clearAllCostmaps()
+        time.sleep(0.5)
         nav.clearAllCostmaps()
 
-        # 6. hold still for 7 s before releasing obstacles + goal
-        time.sleep(7.0)
+        # 5. hold still for 5 s before releasing obstacles + goal
+        time.sleep(5.0)
 
-        # 7. release the obstacles and send the goal
+        # 6. release the obstacles and send the goal
         driver.call_trigger(driver.start_cli)
         goal_stamp = nav.get_clock().now().to_msg()
         nav.goToPose(make_pose_stamped(*goal, stamp=goal_stamp))
 
-        # 8. wait for nav to finish
+        # 7. wait for nav to finish
         while not nav.isTaskComplete():
             pass
 
-        # 9. report
+        # 8. report
         result = nav.getResult()
         print(f'Trial {i} done: result={RESULT_LABEL.get(result, str(result))}')
 
-        # 10. park cylinders again
+        # 9. park cylinders again
         driver.call_trigger(driver.stop_cli)
 
         # Inter-trial pause (skip after the last trial)
         if i < len(TRIALS):
-            time.sleep(7.0)
+            time.sleep(1.0)
 
     driver.destroy_node()
     rclpy.shutdown()
