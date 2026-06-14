@@ -1,0 +1,1 @@
+/home/obai/research_ws/src/nav2_benchmark/scripts/dynamic_obstacles.py

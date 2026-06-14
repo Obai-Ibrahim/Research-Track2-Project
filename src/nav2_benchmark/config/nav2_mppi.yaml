@@ -3,8 +3,8 @@ amcl:
     use_sim_time: False
     set_initial_pose: True
     initial_pose:
-      x: -2.0
-      y: -0.5
+      x: 0.0
+      y: 0.0
       z: 0.0
       yaw: 0.0
     alpha1: 0.2

@@ -321,8 +321,8 @@ ament_cmake_symlink_install_directory("/home/obai/research_ws/src/nav2_benchmark
 # install(DIRECTORY "maps" "worlds" "DESTINATION" "share/nav2_benchmark")
 ament_cmake_symlink_install_directory("/home/obai/research_ws/src/nav2_benchmark" DIRECTORY "maps" "worlds" "DESTINATION" "share/nav2_benchmark")
 
-# install(PROGRAMS "scripts/move_corridor_cylinders.py" "DESTINATION" "lib/nav2_benchmark")
-ament_cmake_symlink_install_programs("/home/obai/research_ws/src/nav2_benchmark" PROGRAMS "scripts/move_corridor_cylinders.py" "DESTINATION" "lib/nav2_benchmark")
+# install(PROGRAMS "scripts/move_corridor_cylinders.py" "scripts/dynamic_obstacles.py" "scripts/simple_driver.py" "DESTINATION" "lib/nav2_benchmark")
+ament_cmake_symlink_install_programs("/home/obai/research_ws/src/nav2_benchmark" PROGRAMS "scripts/move_corridor_cylinders.py" "scripts/dynamic_obstacles.py" "scripts/simple_driver.py" "DESTINATION" "lib/nav2_benchmark")
 
 # install(FILES "/home/obai/research_ws/build/nav2_benchmark/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/nav2_benchmark" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/obai/research_ws/src/nav2_benchmark" FILES "/home/obai/research_ws/build/nav2_benchmark/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/nav2_benchmark" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")

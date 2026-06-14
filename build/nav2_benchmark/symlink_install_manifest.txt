@@ -3,7 +3,9 @@
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/config/nav2_rpp.yaml
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/launch/__pycache__/benchmark.launch.cpython-310.pyc
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/launch/benchmark.launch.py
+/home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/scripts/dynamic_obstacles.py
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/scripts/move_corridor_cylinders.py
+/home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/scripts/simple_driver.py
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/.gitkeep
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/corridor.pgm
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/corridor.yaml
@@ -34,6 +36,8 @@
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/maze2.world
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/office.world
 /home/obai/research_ws/install/nav2_benchmark/lib/nav2_benchmark/move_corridor_cylinders.py
+/home/obai/research_ws/install/nav2_benchmark/lib/nav2_benchmark/dynamic_obstacles.py
+/home/obai/research_ws/install/nav2_benchmark/lib/nav2_benchmark/simple_driver.py
 /home/obai/research_ws/install/nav2_benchmark/share/ament_index/resource_index/package_run_dependencies/nav2_benchmark
 /home/obai/research_ws/install/nav2_benchmark/share/ament_index/resource_index/parent_prefix_path/nav2_benchmark
 /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/environment/ament_prefix_path.sh

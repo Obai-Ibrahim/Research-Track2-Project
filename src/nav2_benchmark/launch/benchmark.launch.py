@@ -57,12 +57,12 @@ def generate_launch_description():
         ),
 
         DeclareLaunchArgument(
-            'x_pose', default_value='-2.0',
+            'x_pose', default_value='0.0',
             description='Robot spawn X (metres)',
         ),
 
         DeclareLaunchArgument(
-            'y_pose', default_value='-0.5',
+            'y_pose', default_value='0.0',
             description='Robot spawn Y (metres)',
         ),
 

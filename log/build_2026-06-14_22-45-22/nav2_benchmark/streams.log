@@ -1,0 +1,61 @@
+[0.009s] Invoking command in '/home/obai/research_ws/build/nav2_benchmark': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble:/opt/ros/jazzy /usr/bin/cmake --build /home/obai/research_ws/build/nav2_benchmark -- -j16 -l16
+[0.044s] Invoked command in '/home/obai/research_ws/build/nav2_benchmark' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble:/opt/ros/jazzy /usr/bin/cmake --build /home/obai/research_ws/build/nav2_benchmark -- -j16 -l16
+[0.053s] Invoking command in '/home/obai/research_ws/build/nav2_benchmark': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble:/opt/ros/jazzy /usr/bin/cmake --install /home/obai/research_ws/build/nav2_benchmark
+[0.059s] -- Install configuration: ""
+[0.060s] -- Execute custom install script
+[0.060s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/config/nav2_dwb.yaml
+[0.060s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/config/nav2_mppi.yaml
+[0.060s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/config/nav2_rpp.yaml
+[0.060s] -- Symlinking: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/launch/__pycache__/benchmark.launch.cpython-310.pyc
+[0.068s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/launch/benchmark.launch.py
+[0.068s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/scripts/dynamic_obstacles.py
+[0.068s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/scripts/move_corridor_cylinders.py
+[0.068s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/scripts/simple_driver.py
+[0.068s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/.gitkeep
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/corridor.pgm
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/corridor.yaml
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/maze2.pgm
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/maze2.yaml
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/office.pgm
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/maps/office.yaml
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/.gitkeep
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/corridor.world
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/corridor/model.config
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/corridor/model.sdf
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/ground_plane/model-1_2.sdf
+[0.069s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/ground_plane/model-1_3.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/ground_plane/model-1_4.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/ground_plane/model.config
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/ground_plane/model.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/maze/model.config
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/maze/model.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/maze2/model.config
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/maze2/model.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/office/model.config
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/office/model.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/sun/model-1_2.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/sun/model-1_3.sdf
+[0.070s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/sun/model-1_4.sdf
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/sun/model.config
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/include/sun/model.sdf
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/maze2.world
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/worlds/office.world
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/lib/nav2_benchmark/move_corridor_cylinders.py
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/lib/nav2_benchmark/dynamic_obstacles.py
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/lib/nav2_benchmark/simple_driver.py
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/ament_index/resource_index/package_run_dependencies/nav2_benchmark
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/ament_index/resource_index/parent_prefix_path/nav2_benchmark
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/environment/ament_prefix_path.sh
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/environment/ament_prefix_path.dsv
+[0.071s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/environment/path.sh
+[0.072s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/environment/path.dsv
+[0.072s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/local_setup.bash
+[0.072s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/local_setup.sh
+[0.072s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/local_setup.zsh
+[0.072s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/local_setup.dsv
+[0.072s] -- Symlinking: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/package.dsv
+[0.078s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/ament_index/resource_index/packages/nav2_benchmark
+[0.078s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/cmake/nav2_benchmarkConfig.cmake
+[0.078s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/cmake/nav2_benchmarkConfig-version.cmake
+[0.078s] -- Up-to-date symlink: /home/obai/research_ws/install/nav2_benchmark/share/nav2_benchmark/package.xml
+[0.080s] Invoked command in '/home/obai/research_ws/build/nav2_benchmark' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble:/opt/ros/jazzy /usr/bin/cmake --install /home/obai/research_ws/build/nav2_benchmark

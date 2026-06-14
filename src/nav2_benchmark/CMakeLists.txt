@@ -13,6 +13,8 @@ install(DIRECTORY maps worlds
 
 install(PROGRAMS
   scripts/move_corridor_cylinders.py
+  scripts/dynamic_obstacles.py
+  scripts/simple_driver.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
