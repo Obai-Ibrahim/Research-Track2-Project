@@ -43,7 +43,7 @@ import rclpy
 from rclpy.executors import SingleThreadedExecutor
 from rclpy.node import Node
 
-from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped, PoseWithCovarianceStamped
 from gazebo_msgs.msg import ModelStates
 from gazebo_msgs.srv import SetEntityState
 from std_srvs.srv import Trigger
@@ -127,6 +127,14 @@ class SimpleDriver(Node):
             raise RuntimeError(
                 f'None of {TELEPORT_SERVICES} are available.')
 
+        # Publisher for /initialpose with a non-zero covariance, so AMCL
+        # actually re-scatters particles around the new pose instead of
+        # treating BasicNavigator's default zero-covariance message as
+        # "you already know exactly — don't reseed". The latter leaves the
+        # old, drifted particles in place and is the RPP re-init drift.
+        self.initial_pose_pub = self.create_publisher(
+            PoseWithCovarianceStamped, '/initialpose', 10)
+
         # Ground-truth state stream from Gazebo. Subscribe to every candidate
         # topic; whichever is actually publishing will fill latest_states.
         self.latest_states = None
@@ -182,6 +190,26 @@ class SimpleDriver(Node):
         event = threading.Event()
         fut.add_done_callback(lambda _f: event.set())
         return fut.result() if event.wait(timeout) else None
+
+    def publish_initial_pose(self, x, y, yaw, xy_var=0.05, yaw_var=0.05):
+        """Publish PoseWithCovarianceStamped to /initialpose with non-zero
+        covariance so AMCL re-seeds particles around the requested pose
+        rather than freezing the old (possibly drifted) particle cloud."""
+        msg = PoseWithCovarianceStamped()
+        msg.header.frame_id = 'map'
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.pose.pose.position.x = float(x)
+        msg.pose.pose.position.y = float(y)
+        qz, qw = yaw_to_quat_zw(yaw)
+        msg.pose.pose.orientation.z = qz
+        msg.pose.pose.orientation.w = qw
+        # Row-major 6x6 cov. Diagonal is x, y, z, roll, pitch, yaw.
+        cov = [0.0] * 36
+        cov[0]  = xy_var    # x
+        cov[7]  = xy_var    # y
+        cov[35] = yaw_var   # yaw
+        msg.pose.covariance = cov
+        self.initial_pose_pub.publish(msg)
 
     def call_trigger(self, cli):
         fut = cli.call_async(Trigger.Request())
@@ -382,17 +410,28 @@ def main():
         # 2. teleport robot to start
         driver.teleport(*start)
 
-        # 3. tell AMCL where we are IMMEDIATELY (no sleep before this)
-        init_stamp = nav.get_clock().now().to_msg()
-        nav.setInitialPose(make_pose_stamped(*start, stamp=init_stamp))
+        # 3. tell AMCL where we are IMMEDIATELY (no sleep before this).
+        #    Publish via our own publisher with non-zero covariance so AMCL
+        #    actually re-seeds the particle filter — BasicNavigator.set-
+        #    InitialPose's default zero covariance leaves stale particles.
+        driver.publish_initial_pose(*start)
 
-        # 4. clear costmaps twice with a small gap to wipe transient marks
+        # 4. clear costmaps repeatedly to wipe transient marks. RPP in
+        #    particular leaves controller state that keeps issuing /cmd_vel
+        #    briefly after the previous goal ends, so two passes aren't always
+        #    enough — three passes with wider gaps, plus one more mid-settle
+        #    once AMCL has fully converged.
+        nav.clearAllCostmaps()
+        time.sleep(0.5)
         nav.clearAllCostmaps()
         time.sleep(0.5)
         nav.clearAllCostmaps()
 
-        # 5. hold still for 5 s before releasing obstacles + goal
-        time.sleep(5.0)
+        # 5. hold still ~5 s, clearing once more partway through to catch
+        #    any stragglers the early passes missed.
+        time.sleep(3.0)
+        nav.clearAllCostmaps()
+        time.sleep(2.0)
 
         # 6. release the obstacles and send the goal
         driver.call_trigger(driver.start_cli)
@@ -434,9 +473,12 @@ def main():
         }
         append_csv_row(args.output, row)
 
-        # Inter-trial pause (skip after the last trial)
+        # Inter-trial pause (skip after the last trial). Slightly longer so
+        # the controller fully releases (especially RPP) before the next
+        # teleport — avoids leftover /cmd_vel nudging the robot mid-jump.
         if i < len(TRIALS):
-            time.sleep(1.0)
+            nav.clearAllCostmaps()  # final wipe of anything the just-ended trial left
+            time.sleep(2.0)
 
     driver.shutdown()
     driver.destroy_node()
