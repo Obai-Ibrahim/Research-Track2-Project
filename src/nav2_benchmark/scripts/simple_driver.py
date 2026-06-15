@@ -33,12 +33,14 @@ import csv
 import math
 import os
 import sys
+import threading
 import time
 from datetime import datetime
 
 import numpy as np
 
 import rclpy
+from rclpy.executors import SingleThreadedExecutor
 from rclpy.node import Node
 
 from geometry_msgs.msg import PoseStamped
@@ -132,10 +134,22 @@ class SimpleDriver(Node):
             self.create_subscription(
                 ModelStates, topic, self._on_model_states, 10)
 
+        # Spin THIS node in a background thread so subscriptions are processed
+        # continuously, regardless of whether the main loop is blocked inside
+        # BasicNavigator. Without this, /model_states queues up faster than we
+        # can drain it and latest_states freezes at whatever happened to be
+        # processed last — exactly the "stuck pose" symptom we hit before.
+        self._executor = SingleThreadedExecutor()
+        self._executor.add_node(self)
+        self._spinning = True
+        self._spin_thread = threading.Thread(
+            target=self._spin_loop, daemon=True)
+        self._spin_thread.start()
+
         # Sanity check — warn early if neither candidate is publishing.
         wait_deadline = time.monotonic() + 5.0
         while self.latest_states is None and time.monotonic() < wait_deadline:
-            rclpy.spin_once(self, timeout_sec=0.1)
+            time.sleep(0.1)
         if self.latest_states is None:
             self.get_logger().warn(
                 f'No ModelStates received on any of {MODEL_STATES_TOPICS} '
@@ -146,13 +160,32 @@ class SimpleDriver(Node):
                 'ModelStates flowing — first message has '
                 f'{len(self.latest_states.name)} entities.')
 
+    def _spin_loop(self):
+        while rclpy.ok() and self._spinning:
+            try:
+                self._executor.spin_once(timeout_sec=0.1)
+            except Exception:
+                break
+
+    def shutdown(self):
+        self._spinning = False
+        try:
+            self._executor.remove_node(self)
+        except Exception:
+            pass
+
     def _on_model_states(self, msg):
         self.latest_states = msg
 
+    def _wait_for_future(self, fut, timeout=5.0):
+        """Block the main thread until the background executor sets fut."""
+        event = threading.Event()
+        fut.add_done_callback(lambda _f: event.set())
+        return fut.result() if event.wait(timeout) else None
+
     def call_trigger(self, cli):
         fut = cli.call_async(Trigger.Request())
-        rclpy.spin_until_future_complete(self, fut)
-        return fut.result()
+        return self._wait_for_future(fut)
 
     def teleport(self, x, y, yaw):
         qz, qw = yaw_to_quat_zw(yaw)
@@ -166,8 +199,7 @@ class SimpleDriver(Node):
             req.state.pose.orientation.w = qw
             req.state.reference_frame = 'world'
             fut = self.gz_cli.call_async(req)
-            rclpy.spin_until_future_complete(self, fut)
-            res = fut.result()
+            res = self._wait_for_future(fut)
             if res is not None and res.success:
                 return True
             self.get_logger().info(
@@ -218,8 +250,8 @@ class SimpleDriver(Node):
         timeout_fired = False
 
         while True:
-            # Process ModelStates callback so latest_states is fresh.
-            rclpy.spin_once(self, timeout_sec=0.0)
+            # latest_states is kept fresh by the background spin thread —
+            # no need to spin the driver here.
 
             now = nav.get_clock().now()
             elapsed = (now - trial_start).nanoseconds / 1e9
@@ -234,12 +266,15 @@ class SimpleDriver(Node):
                 nav.cancelTask()
                 timeout_fired = True
                 while not nav.isTaskComplete():
-                    rclpy.spin_once(self, timeout_sec=0.0)
+                    pass
                 break
 
             if elapsed >= next_sample_at:
                 sample = self._sample_from_states(elapsed)
-                if sample is not None:
+                # Only keep samples with a strictly increasing timestamp —
+                # /clock can stand still for one or two iterations at trial
+                # start (or under low RTF), and duplicate t breaks np.gradient.
+                if sample is not None and (not log or sample[0] > log[-1][0]):
                     log.append(sample)
                 next_sample_at += SAMPLE_PERIOD
 
@@ -285,9 +320,17 @@ def compute_metrics(log, start_xy, goal_xy):
     if len(t) < 4:
         mean_jerk = 0.0
     else:
-        acc  = np.gradient(v, t)
-        jerk = np.gradient(acc, t)
-        mean_jerk = float(np.mean(np.abs(jerk)))
+        # np.gradient requires strictly increasing x. Dedupe defensively
+        # in case the log somehow contains repeated t values.
+        keep = np.concatenate(([True], np.diff(t) > 0))
+        t_u = t[keep]
+        v_u = v[keep]
+        if len(t_u) < 4:
+            mean_jerk = 0.0
+        else:
+            acc  = np.gradient(v_u, t_u)
+            jerk = np.gradient(acc, t_u)
+            mean_jerk = float(np.mean(np.abs(jerk)))
 
     n_close_approach = sum(
         1 for c in cl if c is not None and c < CLOSE_APPROACH_THRESHOLD)
@@ -369,6 +412,13 @@ def main():
               f'result={RESULT_LABEL.get(result, str(result))}, '
               f'success={success}, timeout={timeout_fired}, '
               f'samples={len(log)}')
+        if log:
+            xs = [s[1] for s in log]
+            ys = [s[2] for s in log]
+            print(f'  pose range: x=[{min(xs):.2f}, {max(xs):.2f}] '
+                  f'y=[{min(ys):.2f}, {max(ys):.2f}] '
+                  f'(first=({xs[0]:.2f},{ys[0]:.2f}), '
+                  f'last=({xs[-1]:.2f},{ys[-1]:.2f}))')
 
         metrics = compute_metrics(log,
                                   (start[0], start[1]),
@@ -388,6 +438,7 @@ def main():
         if i < len(TRIALS):
             time.sleep(1.0)
 
+    driver.shutdown()
     driver.destroy_node()
     rclpy.shutdown()
 
